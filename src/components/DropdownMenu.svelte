@@ -16,7 +16,7 @@
     aria-label="{open ? 'Close' : 'Open'} {dropdown.label} dropdown"
     type="button"
     on:click|stopPropagation={() => setOpenDropdown(open ? null : dropdown.id)}
-    class="flex items-center p-2 gap-2 hover:text-black rounded-2xl focus-ring {active
+    class="flex items-center p-2 gap-2 hover:text-black transition-colors rounded-2xl focus-ring {active
       ? 'text-black font-semibold'
       : ''}"
   >

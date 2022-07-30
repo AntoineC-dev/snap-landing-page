@@ -55,13 +55,15 @@
         {/each}
       </ul>
       <div class=" flex flex-col md:flex-row items-stretch md:items-center gap-2 lg:gap-4 shrink-0">
-        <button aria-label="Open login form" type="button" class=" px-4 py-2 rounded-2xl hover:text-black focus-ring"
-          >Login</button
+        <button
+          aria-label="Open login form"
+          type="button"
+          class=" px-4 py-2 rounded-2xl hover:text-black focus-ring transition-colors">Login</button
         >
         <button
           aria-label="Open register form"
           type="button"
-          class="border-2 px-4 py-2 rounded-2xl hover:text-black focus-ring hove:shadow">Register</button
+          class="border px-4 py-2 rounded-2xl hover:text-black focus-ring hover:shadow transition-all">Register</button
         >
       </div>
     </nav>
