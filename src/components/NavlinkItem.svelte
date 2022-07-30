@@ -1,12 +1,17 @@
 <script lang="ts">
-  import { activeNavItem, setActiveDropdown, type NavlinkItem } from "../stores/dropdowns.store";
+  import { navbarStore, setActiveNavItem, type NavlinkItem } from "../stores/navbar.store";
   export let link: NavlinkItem;
 
-  $: active = $activeNavItem === link.id;
+  $: active = $navbarStore.activeNavitem === link.id;
 </script>
 
 <a
+  on:click={() => setActiveNavItem(link.id)}
   href={link.url}
-  on:click={() => setActiveDropdown(link.id)}
-  class="p-2 hover:text-black {active ? 'text-black' : 'text-current'}">{link.label}</a
+  class="flex items-center gap-4 p-2 hover:text-black cursor-pointer"
 >
+  {#if link.svg}
+    <img src={link.svg} alt="" class="w-4" />
+  {/if}
+  <span class={active ? "text-black font-semibold" : ""}>{link.label}</span>
+</a>

@@ -7,7 +7,7 @@ import calendarSvg from "../assets/icon-calendar.svg";
 import remindersSvg from "../assets/icon-reminders.svg";
 import planningSvg from "../assets/icon-planning.svg";
 
-export interface DropdownItem {
+export interface NavlinkItem {
   id: string;
   label: string;
   url: string;
@@ -17,7 +17,7 @@ export interface DropdownItem {
 export interface DropdownMenu {
   id: string;
   label: string;
-  items: DropdownItem[];
+  items: NavlinkItem[];
 }
 
 export const NAV_DROPDOWNS: DropdownMenu[] = [
@@ -42,20 +42,36 @@ export const NAV_DROPDOWNS: DropdownMenu[] = [
   },
 ];
 
-export type NavlinkItem = Omit<DropdownItem, "svg">;
-
 export const NAV_LINKS: NavlinkItem[] = [
   { id: uuid(), label: "Carrers", url: "/" },
   { id: uuid(), label: "About", url: "/" },
 ];
 
 // ---- State ---- //
-export const activeNavItem = writable<DropdownItem["id"] | undefined>(undefined);
+interface NavbarStore {
+  activeDropdown: string | null;
+  activeNavitem: string | null;
+  mobileMenuOpen: boolean;
+  openDropdown: string | null;
+}
+
+export const navbarStore = writable<NavbarStore>({
+  activeDropdown: null,
+  activeNavitem: null,
+  mobileMenuOpen: false,
+  openDropdown: null,
+});
 
 // ---- Reducers ---- //
 
-export const toggleActiveDropdown = (id: DropdownItem["id"]) =>
-  activeNavItem.update((current) => (id !== current ? id : undefined));
-
-export const setActiveDropdown = (id?: DropdownItem["id"]) =>
-  activeNavItem.update((current) => (current === id ? current : id));
+export const setOpenDropdown = (id: string | null) =>
+  navbarStore.update((current) => ({ ...current, openDropdown: id }));
+export const setActiveNavItem = (linkId: string | null) =>
+  navbarStore.update((current) => {
+    const mobileMenuOpen = current.mobileMenuOpen ? false : true;
+    const openDropdown = current.openDropdown !== null ? null : current.openDropdown;
+    const activeDropdown = current.openDropdown !== null ? current.openDropdown : null;
+    return { activeDropdown, activeNavitem: linkId, mobileMenuOpen, openDropdown };
+  });
+export const toggleMobileMenu = () =>
+  navbarStore.update((current) => ({ ...current, mobileMenuOpen: !current.mobileMenuOpen }));

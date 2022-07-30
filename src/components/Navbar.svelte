@@ -1,24 +1,63 @@
 <script lang="ts">
-  import { NAV_DROPDOWNS, NAV_LINKS } from "../stores/dropdowns.store";
+  import { fade } from "svelte/transition";
+  import { quadOut } from "svelte/easing";
+  import { navbarStore, NAV_DROPDOWNS, NAV_LINKS, toggleMobileMenu } from "../stores/navbar.store";
   import DropdownMenu from "./DropdownMenu.svelte";
   import NavlinkItem from "./NavlinkItem.svelte";
-  import src from "../assets/logo.svg";
+  import logo from "../assets/logo.svg";
+  import menuOpen from "../assets/icon-menu.svg";
+  import menuClose from "../assets/icon-close-menu.svg";
+
+  let innerWidth = 0;
+  $: mobileScreen = innerWidth < 768;
 </script>
 
-<header class="px-4 lg:container lg:mx-auto w-full flex items-center gap-8 lg:gap-16 my-8">
-  <img {src} alt="Snap logo" />
-  <nav class="flex-1">
-    <ul class="flex items-center gap-2 lg:gap-4">
-      {#each NAV_DROPDOWNS as dropdown (dropdown.id)}
-        <li><DropdownMenu {dropdown} /></li>
-      {/each}
-      {#each NAV_LINKS as link (link.id)}
-        <li><NavlinkItem {link} /></li>
-      {/each}
-    </ul>
-  </nav>
-  <div class="flex items-center gap-2 lg:gap-4 shrink-0">
-    <button type="button" class=" px-4 py-2 rounded-xl hover:text-black">Login</button>
-    <button type="button" class="border-2 px-4 py-2 rounded-xl hover:text-black">Register</button>
-  </div>
+<svelte:window bind:innerWidth />
+
+<header
+  class="px-4 lg:container lg:mx-auto w-full flex justify-between md:justify-start items-center gap-8 lg:gap-16 py-6 relative"
+>
+  <img src={logo} alt="Snap logo" />
+  <button
+    on:click={toggleMobileMenu}
+    type="button"
+    class="md:hidden w-8 h-8 flex justify-center items-center self-end"
+    aria-label="Open mobile navigation"
+  >
+    <img src={menuOpen} alt="" />
+  </button>
+  {#if $navbarStore.mobileMenuOpen && mobileScreen}
+    <div
+      on:click={toggleMobileMenu}
+      transition:fade={{ duration: 300, easing: quadOut }}
+      class="absolute top-0 left-0 w-full h-screen bg-black/75 md:hidden"
+    />
+  {/if}
+  {#if $navbarStore.mobileMenuOpen || !mobileScreen}
+    <nav
+      transition:fade={{ duration: 300, easing: quadOut }}
+      class="absolute md:static top-0 right-0 w-64 md:w-auto h-screen md:h-auto px-4 py-6 md:p-0 md:flex-1 flex flex-col md:flex-row md:justify-between bg-surface gap-8 md:gap-0"
+    >
+      <button
+        on:click={toggleMobileMenu}
+        type="button"
+        class="md:hidden w-8 h-8 flex justify-center items-center self-end"
+        aria-label="Close mobile navigation"
+      >
+        <img src={menuClose} alt="" />
+      </button>
+      <ul class="flex flex-col md:flex-row md:items-center gap-2 lg:gap-4">
+        {#each NAV_DROPDOWNS as dropdown (dropdown.id)}
+          <li><DropdownMenu {dropdown} /></li>
+        {/each}
+        {#each NAV_LINKS as link (link.id)}
+          <li><NavlinkItem {link} /></li>
+        {/each}
+      </ul>
+      <div class=" flex flex-col md:flex-row items-stretch md:items-center gap-2 lg:gap-4 shrink-0">
+        <button type="button" class=" px-4 py-2 rounded-xl hover:text-black">Login</button>
+        <button type="button" class="border-2 px-4 py-2 rounded-xl hover:text-black">Register</button>
+      </div>
+    </nav>
+  {/if}
 </header>
