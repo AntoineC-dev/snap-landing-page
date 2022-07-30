@@ -15,7 +15,7 @@
 <svelte:window bind:innerWidth />
 
 <header
-  class="px-4 lg:container lg:mx-auto w-full flex justify-between md:justify-start items-center gap-8 lg:gap-16 py-6 relative"
+  class="p-4 md:py-6 lg:container w-full flex justify-between md:justify-start items-center gap-8 lg:gap-16  relative"
 >
   <img src={logo} alt="Snap logo" />
   <button
@@ -36,7 +36,7 @@
   {#if $navbarStore.mobileMenuOpen || !mobileScreen}
     <nav
       transition:fade={{ duration: 300, easing: quadOut }}
-      class="absolute md:static top-0 right-0 w-64 md:w-auto h-screen md:h-auto px-4 py-6 md:p-0 md:flex-1 flex flex-col md:flex-row md:justify-between bg-surface gap-8 md:gap-0"
+      class="absolute md:static top-0 right-0 w-64 md:w-auto h-screen md:h-auto p-4 md:p-0 md:flex-1 flex flex-col md:flex-row md:justify-between bg-surface gap-8 md:gap-0"
     >
       <button
         on:click={toggleMobileMenu}
