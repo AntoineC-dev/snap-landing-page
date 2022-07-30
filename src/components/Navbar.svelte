@@ -17,11 +17,11 @@
 <header
   class="p-4 md:py-6 lg:container w-full flex justify-between md:justify-start items-center gap-8 lg:gap-16  relative"
 >
-  <img src={logo} alt="Snap logo" />
+  <a href="/" aria-label="Go to homepage" class="focus-ring"><img src={logo} alt="Snap logo" /></a>
   <button
     on:click={toggleMobileMenu}
     type="button"
-    class="md:hidden w-8 h-8 flex justify-center items-center self-end"
+    class="md:hidden w-8 h-8 flex justify-center items-center self-end focus-ring"
     aria-label="Open mobile navigation"
   >
     <img src={menuOpen} alt="" />
@@ -41,7 +41,7 @@
       <button
         on:click={toggleMobileMenu}
         type="button"
-        class="md:hidden w-8 h-8 flex justify-center items-center self-end"
+        class="md:hidden w-8 h-8 flex justify-center items-center self-end focus-ring"
         aria-label="Close mobile navigation"
       >
         <img src={menuClose} alt="" />
@@ -55,8 +55,14 @@
         {/each}
       </ul>
       <div class=" flex flex-col md:flex-row items-stretch md:items-center gap-2 lg:gap-4 shrink-0">
-        <button type="button" class=" px-4 py-2 rounded-xl hover:text-black">Login</button>
-        <button type="button" class="border-2 px-4 py-2 rounded-xl hover:text-black">Register</button>
+        <button aria-label="Open login form" type="button" class=" px-4 py-2 rounded-2xl hover:text-black focus-ring"
+          >Login</button
+        >
+        <button
+          aria-label="Open register form"
+          type="button"
+          class="border-2 px-4 py-2 rounded-2xl hover:text-black focus-ring hove:shadow">Register</button
+        >
       </div>
     </nav>
   {/if}

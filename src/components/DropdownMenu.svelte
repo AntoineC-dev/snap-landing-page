@@ -13,9 +13,12 @@
 
 <div class="relative">
   <button
+    aria-label="{open ? 'Close' : 'Open'} {dropdown.label} dropdown"
     type="button"
     on:click|stopPropagation={() => setOpenDropdown(open ? null : dropdown.id)}
-    class="flex items-center p-2 gap-2 hover:text-black {active ? 'text-black font-semibold' : ''}"
+    class="flex items-center p-2 gap-2 hover:text-black rounded-2xl focus-ring {active
+      ? 'text-black font-semibold'
+      : ''}"
   >
     <span>{dropdown.label}</span>
     <img {src} alt="" class="transition-transform duration-300 {open ? '-rotate-180' : 'rotate-0'}" />

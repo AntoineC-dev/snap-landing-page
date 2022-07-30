@@ -26,8 +26,10 @@
         Get your team in sync, no matter your location. Streamline processes, create team rituals, and watch
         productivity soar.
       </p>
-      <button type="button" class="bg-black text-surface font-semibold px-6 py-3 text-lg rounded-2xl shadow"
-        >Learn more</button
+      <button
+        aria-label="Learn more about us"
+        type="button"
+        class="bg-black text-surface font-semibold px-6 py-3 text-lg rounded-2xl shadow focus-ring">Learn more</button
       >
     </div>
     <div class="flex justify-between items-center gap-6 xl:gap-12 lg:justify-evenly xl:justify-start">
