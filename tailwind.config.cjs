@@ -19,6 +19,7 @@ module.exports = {
       black: "hsl(0, 0%, 8%)",
       surface: "hsl(0, 0%, 98%)",
       gray: "hsl(0, 0%, 41%)",
+      blue: "hsl(228, 45%, 44%)",
     },
     container: {
       center: true,

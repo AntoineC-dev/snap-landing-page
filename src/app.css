@@ -6,4 +6,7 @@
   .focus-ring {
     @apply focus:outline-none focus-visible:ring-2 ring-black ring-offset-2 ring-offset-gray;
   }
+  .passing-underline {
+    @apply [@media(hover:hover)]:relative [@media(hover:hover)]:before:absolute [@media(hover:hover)]:before:w-full [@media(hover:hover)]:before:h-0.5 [@media(hover:hover)]:before:rounded-md [@media(hover:hover)]:before:bg-blue [@media(hover:hover)]:before:-bottom-1 [@media(hover:hover)]:before:left-0 [@media(hover:hover)]:before:origin-right [@media(hover:hover)]:before:scale-x-0 [@media(hover:hover)]:before:transition-transform [@media(hover:hover)]:before:duration-300 [@media(hover:hover)]:before:ease-in-out [@media(hover:hover)]:before:hover:origin-left [@media(hover:hover)]:before:hover:scale-x-100;
+  }
 }
