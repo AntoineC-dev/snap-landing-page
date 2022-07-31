@@ -15,6 +15,7 @@ export interface NavlinkItem {
 }
 
 export interface DropdownMenu {
+  anchor: "left" | "right";
   id: string;
   label: string;
   items: NavlinkItem[];
@@ -23,6 +24,7 @@ export interface DropdownMenu {
 export const NAV_DROPDOWNS: DropdownMenu[] = [
   {
     id: uuid(),
+    anchor: "right",
     label: "Features",
     items: [
       { id: uuid(), label: "Todo List", url: "/", svg: togoSvg },
@@ -33,6 +35,7 @@ export const NAV_DROPDOWNS: DropdownMenu[] = [
   },
   {
     id: uuid(),
+    anchor: "left",
     label: "Company",
     items: [
       { id: uuid(), label: "History", url: "/" },
@@ -49,14 +52,12 @@ export const NAV_LINKS: NavlinkItem[] = [
 
 // ---- State ---- //
 interface NavbarStore {
-  activeDropdown: string | null;
   activeNavitem: string | null;
   mobileMenuOpen: boolean;
   openDropdown: string | null;
 }
 
 export const navbarStore = writable<NavbarStore>({
-  activeDropdown: null,
   activeNavitem: null,
   mobileMenuOpen: false,
   openDropdown: null,
@@ -70,8 +71,7 @@ export const setActiveNavItem = (linkId: string | null) =>
   navbarStore.update((current) => {
     const mobileMenuOpen = current.mobileMenuOpen ? false : true;
     const openDropdown = current.openDropdown !== null ? null : current.openDropdown;
-    const activeDropdown = current.openDropdown !== null ? current.openDropdown : null;
-    return { activeDropdown, activeNavitem: linkId, mobileMenuOpen, openDropdown };
+    return { activeNavitem: linkId, mobileMenuOpen, openDropdown };
   });
 export const toggleMobileMenu = () =>
   navbarStore.update((current) => ({ ...current, mobileMenuOpen: !current.mobileMenuOpen }));
