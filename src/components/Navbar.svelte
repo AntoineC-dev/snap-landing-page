@@ -35,6 +35,7 @@
   {/if}
   {#if $navbarStore.mobileMenuOpen || !mobileScreen}
     <nav
+      aria-label="Main Navigation"
       transition:fade={{ duration: 300, easing: quadOut }}
       class="absolute md:static top-0 right-0 w-64 md:w-auto h-screen md:h-auto p-4 md:p-0 md:flex-1 flex flex-col md:flex-row md:justify-between bg-surface gap-8 md:gap-0"
     >
