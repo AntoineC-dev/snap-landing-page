@@ -1,21 +1,29 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { slide } from "svelte/transition";
   import { quadInOut } from "svelte/easing";
   import { type DropdownMenu, navbarStore, setOpenDropdown } from "../stores/navbar.store";
-  import { clickOutside } from "../helpers/clickOutsideEvent";
+  import { searchActiveNavlink } from "../helpers/searchActiveNavlink";
+  import { clickOutside, mouseOut } from "../helpers/mouseEvents";
   import NavlinkItem from "./NavlinkItem.svelte";
   import src from "../assets/icon-arrow-down.svg";
 
   export let dropdown: DropdownMenu;
+  let semanticId = "";
+  onMount(() => {
+    semanticId = `${dropdown.label.toLowerCase()}-dropdown`;
+  });
   $: open = $navbarStore.openDropdown === dropdown.id;
-  $: active = $navbarStore.activeDropdown === dropdown.id;
+  $: active = searchActiveNavlink({ activeNavitem: $navbarStore.activeNavitem, items: dropdown.items });
 </script>
 
-<div class="relative">
+<div use:mouseOut={{ callback: () => open && setOpenDropdown(null), listen: open }} class="relative">
   <button
     aria-label="{open ? 'Close' : 'Open'} {dropdown.label} dropdown"
+    aria-expanded={open}
+    aria-controls={semanticId}
     type="button"
-    on:click|stopPropagation={() => setOpenDropdown(open ? null : dropdown.id)}
+    on:mouseenter={() => !open && setOpenDropdown(dropdown.id)}
     class="flex items-center p-2 gap-2 hover:text-black transition-colors rounded-2xl focus-ring {active
       ? 'text-black font-semibold'
       : ''}"
@@ -24,14 +32,17 @@
     <img {src} alt="" class="transition-transform duration-300 {open ? '-rotate-180' : 'rotate-0'}" />
   </button>
   {#if open}
-    <div
+    <ul
+      id={semanticId}
       transition:slide={{ duration: 300, easing: quadInOut }}
       use:clickOutside={() => open && setOpenDropdown(null)}
-      class="md:absolute min-w-max top-[calc(100%+0.5rem)] flex flex-col md:bg-white md:shadow-lg px-8 py-4  md:p-4 rounded-xl"
+      class="md:absolute min-w-max top-full {dropdown.anchor === 'left'
+        ? 'left-0'
+        : 'right-0'} flex flex-col md:bg-white md:shadow-lg px-8 py-4  md:p-4 rounded-xl"
     >
       {#each dropdown.items as link (link.id)}
-        <NavlinkItem {link} />
+        <li><NavlinkItem {link} /></li>
       {/each}
-    </div>
+    </ul>
   {/if}
 </div>
