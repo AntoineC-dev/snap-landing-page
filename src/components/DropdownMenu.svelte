@@ -17,7 +17,7 @@
   $: active = searchActiveNavlink({ activeNavitem: $navbarStore.activeNavitem, items: dropdown.items });
 </script>
 
-<div use:mouseOut={{ callback: () => open && setOpenDropdown(null), listen: open }} class="relative">
+<div use:mouseOut={{ callback: () => setOpenDropdown(null), listen: open }} class="relative">
   <button
     aria-label="{open ? 'Close' : 'Open'} {dropdown.label} dropdown"
     aria-expanded={open}
